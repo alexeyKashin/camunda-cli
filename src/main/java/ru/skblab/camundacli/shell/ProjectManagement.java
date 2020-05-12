@@ -24,7 +24,7 @@ public class ProjectManagement {
     private final ShellHelper shellHelper;
 
     @ShellMethod(value = "Установка активного проекта и получение его из gitlab.", key = "ps")
-    public void projectSelected(
+    public void selectActiveProject(
             @ShellOption(value = {"-p", "--project"}, defaultValue = "",
                     help = "Выбор активного проекта, по умолчанию первый в списке.") String project,
             @ShellOption(value = {"-r", "--refresh"}, defaultValue = "true",
@@ -50,7 +50,7 @@ public class ProjectManagement {
 
     @ShellMethodAvailability("checkPushAndDeploy")
     @ShellMethod(value = "Сохранить и передать изменения во внешнее хранилище(gitlab) и задеплоить в камунду.", key = "pp")
-    public void projectPush(
+    public void pushProject(
             @ShellOption(value = {"-p", "--project"}, defaultValue = "",
                     help = "Залить указанный проект в gitlab, если найден.") String project) throws URISyntaxException {
         if (!checkProject(project)) {
