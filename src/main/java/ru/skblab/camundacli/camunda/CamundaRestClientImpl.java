@@ -1,10 +1,7 @@
 package ru.skblab.camundacli.camunda;
 
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -20,22 +17,13 @@ import java.util.Map;
 @Component
 public class CamundaRestClientImpl implements CamundaRestClient {
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
     private final String engineRestUrl;
     private final ShellHelper shellHelper;
     @Autowired
     public CamundaRestClientImpl(ShellHelper shellHelper, ApplicationProperties applicationProperties) {
         this.shellHelper = shellHelper;
         this.engineRestUrl = applicationProperties.getCamundaRestEngineUrl();
-
-        // Сконфигурировать клиент
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        requestFactory.setHttpClient(httpClient);
-        requestFactory.setConnectionRequestTimeout(2000);
-        requestFactory.setConnectTimeout(2000);
-        requestFactory.setReadTimeout(2000);
-        this.restTemplate = new RestTemplate(requestFactory);
     }
 
     @Override
